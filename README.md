@@ -17,17 +17,17 @@ Currently, the following tests are included:
 	 - Is the firewall blocking unsolicited inbound packets?
  - Has someone tried and failed to log in as root recently? (Useful for
 	 detecting brute-force login attempts.)  
-	 
 
- Installation
- ============
- Currently there is no (supported) way to install Dragon Catcher. You will need
- to run it as a script with admin privileges:  
- `sudo python3 dragon_catcher.py`  
- or  
- `gksudo python3 dragon_catcher.py`  
 
- In the future I plan on adding an installation option for at least Debian (and
+Installation
+============
+Currently there is no (supported) way to install Dragon Catcher. You will need
+to run it as a script with admin privileges:  
+`sudo python3 dragon_catcher.py`  
+or  
+`gksudo python3 dragon_catcher.py`  
+
+In the future I plan on adding an installation option for at least Debian (and
 related distros such as Linux Mint) and probably Fedora as well.
 
 Contributing
