@@ -16,7 +16,8 @@ Currently, the following tests are included:
 	 - Is the firewall logging security events?
 	 - Is the firewall blocking unsolicited inbound packets?
  - Has someone tried and failed to log in as root recently? (Useful for
-	 detecting brute-force login attempts.)
+	 detecting brute-force login attempts.)  
+	 
 
  Installation
  ============
