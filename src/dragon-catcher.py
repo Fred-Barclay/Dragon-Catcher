@@ -100,6 +100,15 @@ if root_attempts[0] == b'root':
 	print(root_attempts)
 	total_advice.append('attempted_root_login_FAIL')
 
+# Is the ssh-server running?
+p1 = subprocess.Popen(['pidof', 'sshd'], stdout=subprocess.PIPE).communicate()[0]
+if not len(p1.split()) == 0:
+	print('There is an actively running instance of ssh-server. \x1b[0;30;41m [WARN] \x1b[0m')
+	print(p1.split())
+	total_warns.append('sshd_running_FAIL')
+else:
+	print('The ssh server does not seem to be running.')
+
 # Final messages:
 print('You have %d warnings.' % len(total_warns))
 print('You have %d advisories.' % len(total_advice))

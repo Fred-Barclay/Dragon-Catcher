@@ -11,12 +11,17 @@ errors, then it gives a [WARN] or [Advice], depending on the severity.
 
 Currently, the following tests are included:
  - Is the root account enabled (can someone log into root)?
- - Is the firewall running? (Currently only ufw is supported; I plan on adding
-	 support for firewalld as well.)
+ 
+ - Is the firewall running? (Currently only ufw is supported. I plan on adding
+	support for firewalld as well.)
 	 - Is the firewall logging security events?
 	 - Is the firewall blocking unsolicited inbound packets?
+
+
  - Has someone tried and failed to log in as root recently? (Useful for
-	 detecting brute-force login attempts.)  
+	 detecting brute-force login attempts.)
+
+ - Is the ssh server running?
 
 
 Installation
