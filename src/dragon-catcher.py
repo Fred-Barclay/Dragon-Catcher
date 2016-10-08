@@ -92,6 +92,7 @@ else:
 		else:
 			print('Your firewall does not allow inbound packets.')
 
+# Has someone recently tried and failed to log in as root?
 p1 = subprocess.Popen(['lastb', 'root'], stdout=subprocess.PIPE).communicate()[0]
 root_attempts = p1.split()
 if root_attempts[0] == b'root':

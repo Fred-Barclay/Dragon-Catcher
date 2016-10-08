@@ -1,8 +1,8 @@
 Dragon Catcher
 ==============
 
-A simple Python 3 script to catch common Linux security errors, like forgetting
-to (re)enable the firewall.
+A simple Python 3 script to catch common desktop Linux security errors, like
+forgetting to (re)enable the firewall.
 
 Description
 ===========
@@ -23,9 +23,9 @@ Installation
 ============
 Currently there is no (supported) way to install Dragon Catcher. You will need
 to run it as a script with admin privileges:  
-`sudo python3 dragon_catcher.py`  
+`sudo python3 dragon-catcher.py`  
 or  
-`gksudo python3 dragon_catcher.py`  
+`gksudo python3 dragon-catcher.py`  
 
 In the future I plan on adding an installation option for at least Debian (and
 related distros such as Linux Mint) and probably Fedora as well.
