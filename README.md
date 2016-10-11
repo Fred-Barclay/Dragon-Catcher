@@ -23,7 +23,9 @@ Currently, the following tests are included:
 
  - Is the ssh server running?
 
- - Is Apache v1 running?
+ - Is httpd running?
+
+ - Is apache2 running?
 
 
 Installation
