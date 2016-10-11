@@ -11,7 +11,7 @@ errors, then it gives a [WARN] or [Advice], depending on the severity.
 
 Currently, the following tests are included:
  - Is the root account enabled (can someone log into root)?
- 
+
  - Is the firewall running? (Currently only ufw is supported. I plan on adding
 	support for firewalld as well.)
 	 - Is the firewall logging security events?
@@ -22,6 +22,8 @@ Currently, the following tests are included:
 	 detecting brute-force login attempts.)
 
  - Is the ssh server running?
+
+ - Is Apache v1 running?
 
 
 Installation

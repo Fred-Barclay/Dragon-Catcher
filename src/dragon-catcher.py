@@ -59,38 +59,52 @@ else:
 	print('The root account is disabled on your system.')
 
 # Is the firewall running? (only ufw at the moment)
-# TODO: check for open ports
-p1 = subprocess.Popen(['ufw', 'status', 'verbose'], stdout=subprocess.PIPE).communicate()[0]
-firewall_status = p1.split()
+# UFW
+p1 = subprocess.Popen(['service', 'ufw', 'status'], stdout=subprocess.PIPE).communicate()[0]
+if p1 == b'Firewall is running...done.\n':
+	firewall = 1
+#Firewalld
 
-# Is the firewall active?
-if not firewall_status[1] == b'active':
-	print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
-	print(firewall_status[1])
-	total_warns.append('firewall_active_FAIL')
-
+# Not running/not recognised
 else:
-	# Is the firewall logging events?
-	if not firewall_status[3] == b'on':
-		print('Your firewall is not logging events. \x1b[6;36;43m [Advice] \x1b[0m')
-		print(firewall_status[3])
-		total_advice.append('firewall_log_FAIL')
-		if not firewall_status[5] == b'deny' or firewall_status[5] == b'reject':
-			print('Your firewall is allowing all inbound packets. \x1b[0;30;41m [WARN] \x1b[0m')
-			print(firewall_status[5])
-			total_warns.append('firewall_packets_FAIL')
-		else:
-			print('Your firewall does not allow inbound packets.')
+	firewall = 0
+
+if firewall == 1: # UFW
+# TODO: check for open ports
+	p2 = subprocess.Popen(['ufw', 'status', 'verbose'], stdout=subprocess.PIPE).communicate()[0]
+	firewall_status = p2.split()
+
+	# Is the firewall active (double-check)?
+	if not firewall_status[1] == b'active':
+		print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
+		print(firewall_status[1])
+		total_warns.append('firewall_active_FAIL')
 
 	else:
-		print('Your firewall is logging events')
-	# Is the firewall rejecting unsolicited inbound packets?
-		if not firewall_status[6] == b'deny' or firewall_status[6] == b'reject':
-			print('Your firewall is allowing all inbound packets. \x1b[0;30;41m [WARN] \x1b[0m')
-			print(firewall_status[6])
-			total_warns.append('firewall_packets_FAIL')
+		# Is the firewall logging events?
+		if not firewall_status[3] == b'on':
+			print('Your firewall is not logging events. \x1b[6;36;43m [Advice] \x1b[0m')
+			print(firewall_status[3])
+			total_advice.append('firewall_log_FAIL')
+			if not firewall_status[5] == b'deny' or firewall_status[5] == b'reject':
+				print('Your firewall is allowing all inbound packets. \x1b[0;30;41m [WARN] \x1b[0m')
+				print(firewall_status[5])
+				total_warns.append('firewall_packets_FAIL')
+			else:
+				print('Your firewall does not allow inbound packets.')
+
 		else:
-			print('Your firewall does not allow inbound packets.')
+			print('Your firewall is logging events')
+		# Is the firewall rejecting unsolicited inbound packets?
+			if not firewall_status[6] == b'deny' or firewall_status[6] == b'reject':
+				print('Your firewall is allowing all inbound packets. \x1b[0;30;41m [WARN] \x1b[0m')
+				print(firewall_status[6])
+				total_warns.append('firewall_packets_FAIL')
+			else:
+				print('Your firewall does not allow inbound packets.')
+
+if firewall == 0: #Not running/not recognised
+	print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
 
 # Has someone recently tried and failed to log in as root?
 p1 = subprocess.Popen(['lastb', 'root'], stdout=subprocess.PIPE).communicate()[0]
@@ -108,6 +122,18 @@ if not len(p1.split()) == 0:
 	total_warns.append('sshd_running_FAIL')
 else:
 	print('The ssh server does not seem to be running.')
+
+# Is httpd running?
+p1 = subprocess.Popen(['pidof', 'httpd'], stdout=subprocess.PIPE).communicate()[0]
+if not len(p1.split()) == 0:
+	print('There is an actively running instance of httpd. You may want to \
+		investigate the cause. \x1b[6;36;43m [Advice] \x1b[0m')
+	print(p1.split())
+	total_advice.append('httpd_running_FAIL')
+else:
+	print('There are no running instances of httpd.')
+
+# TODO: apache2
 
 # Final messages:
 print('You have %d warnings.' % len(total_warns))
