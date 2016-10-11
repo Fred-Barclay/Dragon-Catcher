@@ -64,6 +64,8 @@ p1 = subprocess.Popen(['service', 'ufw', 'status'], stdout=subprocess.PIPE).comm
 if p1 == b'Firewall is running...done.\n':
 	firewall = 1
 #Firewalld
+#if p1 == something-or-another-firewalld-related
+#	firewall = 2
 
 # Not running/not recognised
 else:
@@ -103,7 +105,10 @@ if firewall == 1: # UFW
 			else:
 				print('Your firewall does not allow inbound packets.')
 
-if firewall == 0: #Not running/not recognised
+#elif firewall == 2: #Firewalld
+#do something
+
+elif firewall == 0: #Not running/not recognised
 	print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
 
 # Has someone recently tried and failed to log in as root?
