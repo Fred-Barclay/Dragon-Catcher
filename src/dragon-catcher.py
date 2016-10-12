@@ -48,16 +48,6 @@ import subprocess
 total_warns = []
 total_advice = []
 
-# Is the root account enabled?
-p1 = subprocess.Popen(["passwd", "-S", "root"], stdout=subprocess.PIPE).communicate()[0]
-noroot = p1.split()[1]
-if not noroot == b'L':
-	print('The root account is enabled on your system. [WARN]')
-	print(noroot)
-	total_warns.append('noroot_FAIL')
-else:
-	print('The root account is disabled on your system.')
-
 # Is the firewall running? (only ufw at the moment)
 # UFW
 p1 = subprocess.Popen(['service', 'ufw', 'status'], stdout=subprocess.PIPE).communicate()[0]

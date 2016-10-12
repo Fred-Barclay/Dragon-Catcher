@@ -10,7 +10,6 @@ Dragon Catcher is designed to test for common Linux security errors. If it finds
 errors, then it gives a [WARN] or [Advice], depending on the severity.
 
 Currently, the following tests are included:
- - Is the root account enabled (can someone log into root)?
 
  - Is the firewall running? (Currently only ufw is supported. I plan on adding
 	support for firewalld as well.)
