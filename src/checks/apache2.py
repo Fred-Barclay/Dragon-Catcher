@@ -13,6 +13,5 @@ def apache2():
 		investigate the cause. \x1b[6;36;43m [Advice] \x1b[0m
 		''')
 		print(p1.split())
-		total_advice.append('apache2_running_FAIL')
 	else:
 		print('There are not detected instances of apache2.')

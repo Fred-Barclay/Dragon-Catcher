@@ -48,9 +48,6 @@ import os
 import sys
 from checks import apache2, fw_detect, httpd, rootlog, sshd
 
-total_warns = []
-total_advice = []
-
 # Make sure we are running as root
 if os.geteuid() != 0:
 	print('This script requires elevated priviledges!\nExiting.')
@@ -73,7 +70,3 @@ rootlog.rootlog()
 
 # Check for running sshd
 sshd.sshd()
-
-# Final messages
-print('You have %d warnings' % len(total_warns))
-print('You have %d advisories' % len(total_advice))

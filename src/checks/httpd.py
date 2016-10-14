@@ -13,6 +13,5 @@ def httpd():
 		the cause. \x1b[6;36;43m [Advice] \x1b[0m')
 		''')
 		print(p1.split())
-		total_advice.append('httpd_running_FAIL')
 	else:
 		print('There are no detected instances of httpd.')
