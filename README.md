@@ -14,10 +14,9 @@ security errors, like the ones above. If it finds any errors, then it returns a
 
 Currently, the following tests are included:
 
- - Is the firewall running? (Currently only ufw is supported. I plan on adding
-	support for firewalld as well.)
-	 - Is the firewall logging security events?
-	 - Is the firewall blocking unsolicited inbound packets?
+ - Is the firewall running?
+	 - Is the firewall logging security events? (UFW only)
+	 - Is the firewall blocking unsolicited inbound packets? (UFW only)
 
 
  - Has someone tried and failed to log in as root recently? (Useful for
