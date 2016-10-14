@@ -44,98 +44,55 @@
 #       BugsAteFred@gmail.com
 
 import subprocess
+import os
+import sys
+# From 'tests' directory
+from checks import apache2, httpd, rootlog, sshd, ufw
 
 total_warns = []
 total_advice = []
 
-# Is the firewall running? (only ufw at the moment)
+# Make sure we are running as root
+if os.geteuid() != 0:
+	print('This script requires elevated priviledges!\nExiting.')
+	sys.exit(0)
+
+# Which firewall is present?
 # UFW
-p1 = subprocess.Popen(['service', 'ufw', 'status'], stdout=subprocess.PIPE).communicate()[0]
-if p1 == b'Firewall is running...done.\n':
-	firewall = 1
+if subprocess.Popen(['service', 'ufw', 'status'], \
+	stdout=subprocess.PIPE).communicate()[0] == b'Firewall is running...done.\n':
+	firewall = 'ufw'
 #Firewalld
-#if p1 == something-or-another-firewalld-related
-#	firewall = 2
+#if subprocess.Popen(['service', 'firewalld', status'], \
+#	stdout=subprocess.PIPE).communicate()[0] ==
+#	firewall = 'firewalld'
 
 # Not running/not recognised
 else:
 	firewall = 0
 
-if firewall == 1: # UFW
-# TODO: check for open ports
-	p2 = subprocess.Popen(['ufw', 'status', 'verbose'], stdout=subprocess.PIPE).communicate()[0]
-	firewall_status = p2.split()
+# UFW
+if firewall == 'ufw':
+	ufw.ufw()
+# elif firewall == 'firewalld':
+# do something
 
-	# Is the firewall active (double-check)?
-	if not firewall_status[1] == b'active':
-		print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
-		print(firewall_status[1])
-		total_warns.append('firewall_active_FAIL')
-
-	else:
-		# Is the firewall logging events?
-		if not firewall_status[3] == b'on':
-			print('Your firewall is not logging events. \x1b[6;36;43m [Advice] \x1b[0m')
-			print(firewall_status[3])
-			total_advice.append('firewall_log_FAIL')
-			if not firewall_status[5] == b'deny' or firewall_status[5] == b'reject':
-				print('Your firewall is allowing all inbound packets. \x1b[0;30;41m [WARN] \x1b[0m')
-				print(firewall_status[5])
-				total_warns.append('firewall_packets_FAIL')
-			else:
-				print('Your firewall does not allow inbound packets.')
-
-		else:
-			print('Your firewall is logging events')
-		# Is the firewall rejecting unsolicited inbound packets?
-			if not firewall_status[6] == b'deny' or firewall_status[6] == b'reject':
-				print('Your firewall is allowing all inbound packets. \x1b[0;30;41m [WARN] \x1b[0m')
-				print(firewall_status[6])
-				total_warns.append('firewall_packets_FAIL')
-			else:
-				print('Your firewall does not allow inbound packets.')
-
-#elif firewall == 2: #Firewalld
-#do something
-
-elif firewall == 0: #Not running/not recognised
+# No detected firewall
+elif firewall == 0: # Not running/not recognised
 	print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
 
-# Has someone recently tried and failed to log in as root?
-p1 = subprocess.Popen(['lastb', 'root'], stdout=subprocess.PIPE).communicate()[0]
-root_attempts = p1.split()
-if root_attempts[0] == b'root':
-	print('Someone has tried (and failed) to log in as root. \x1b[6;36;43m [Advice] \x1b[0m')
-	print(root_attempts)
-	total_advice.append('attempted_root_login_FAIL')
+# Check for apache2
+apache2.apache2()
 
-# Is the ssh-server running?
-p1 = subprocess.Popen(['pidof', 'sshd'], stdout=subprocess.PIPE).communicate()[0]
-if not len(p1.split()) == 0:
-	print('There is an actively running instance of ssh-server. \x1b[0;30;41m [WARN] \x1b[0m')
-	print(p1.split())
-	total_warns.append('sshd_running_FAIL')
-else:
-	print('The ssh server does not seem to be running.')
+# Check for httpd
+httpd.httpd()
 
-# Is httpd running?
-p1 = subprocess.Popen(['pidof', 'httpd'], stdout=subprocess.PIPE).communicate()[0]
-if not len(p1.split()) == 0:
-	print('There is an actively running instance of httpd. You may want to investigate the cause. \x1b[6;36;43m [Advice] \x1b[0m')
-	print(p1.split())
-	total_advice.append('httpd_running_FAIL')
-else:
-	print('There are no detected instances of httpd.')
+# Check for recent root login attempts
+rootlog.rootlog()
 
-# Is apache2 running?
-p1 = subprocess.Popen(['pidof', 'apache2'], stdout=subprocess.PIPE).communicate()[0]
-if not len(p1.split()) == 0:
-	print('There is an actively running instance of apache2. You may want to investigate the cause. \x1b[6;36;43m [Advice] \x1b[0m')
-	print(p1.split())
-	total_advice.append('apache2_running_FAIL')
-else:
-	print('There are not detected instances of apache2.')
+# Check for running sshd
+sshd.sshd()
 
-# Final messages:
-print('You have %d warnings.' % len(total_warns))
-print('You have %d advisories.' % len(total_advice))
+# Final messages
+print('You have %d warnings' % len(total_warns))
+print('You have %d advisories' % len(total_advice))
