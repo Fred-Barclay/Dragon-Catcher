@@ -1,13 +1,16 @@
 Dragon Catcher
 ==============
+*There be dragons.*
 
-A simple Python 3 script to catch common desktop Linux security errors, like
-forgetting to (re)enable the firewall.
+A simple Python 3 script for beginners and developers alike, to catch common
+desktop Linux security errors:
+ - Ever disable the firewall and then forget to re-enable it?
+ - Ever run Apache to test something and then forget to turn it off?
+ - Ever test openssh-server and then accidentally leave it running?
 
-Description
-===========
-Dragon Catcher is designed to test for common Linux security errors. If it finds
-errors, then it gives a [WARN] or [Advice], depending on the severity.
+Then Dragon Catcher is the tool for you! It's designed to test for common Linux
+security errors, like the ones above. If it finds any errors, then it returns a
+[WARN] or [Advice], depending on the severity.
 
 Currently, the following tests are included:
 
