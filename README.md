@@ -41,6 +41,12 @@ or
 In the future I plan on adding an installation option for at least Debian (and
 related distros such as Linux Mint) and probably Fedora as well.
 
+Roadmap
+=======
+*Where did we come from? Where are we going?*
+
+Please view the ROADMAP file.
+
 Contributing
 ============
 Contributions of any sort are welcome! Please be sure to test any code changes

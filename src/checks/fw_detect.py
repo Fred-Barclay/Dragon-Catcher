@@ -24,7 +24,12 @@ def firewall_detect():
 	global firewall
 
 	if init == 'systemd':
-		print('ping-pong') # Obviously holding code
+		if subprocess.Popen(['systemctl', 'is-active', 'ufw'], \
+			stdout=subprocess.PIPE).communicate()[0] == b'active\n':
+			firewall = 'ufw'
+
+		else:
+			firewall = 0
 
 	elif init == 'other':
 		if subprocess.Popen(['service', 'ufw', 'status'], \

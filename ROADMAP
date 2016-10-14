@@ -1,0 +1,11 @@
+ - Fully support systemd
+ 	 - Special case for Arch?
+
+ - Add support for firewalld
+
+ - Add panel option and automate tests (a la https://github.com/snare/idiot)
+
+ - Add installation option
+
+COMPLETED:
+ - Split tests into individual modules rather than a single big file
