@@ -46,8 +46,7 @@
 import subprocess
 import os
 import sys
-# From 'tests' directory
-from checks import apache2, httpd, rootlog, sshd, ufw
+from checks import apache2, fw_detect, httpd, rootlog, sshd
 
 total_warns = []
 total_advice = []
@@ -57,29 +56,11 @@ if os.geteuid() != 0:
 	print('This script requires elevated priviledges!\nExiting.')
 	sys.exit(0)
 
-# Which firewall is present?
-# UFW
-if subprocess.Popen(['service', 'ufw', 'status'], \
-	stdout=subprocess.PIPE).communicate()[0] == b'Firewall is running...done.\n':
-	firewall = 'ufw'
-#Firewalld
-#if subprocess.Popen(['service', 'firewalld', status'], \
-#	stdout=subprocess.PIPE).communicate()[0] ==
-#	firewall = 'firewalld'
-
-# Not running/not recognised
-else:
-	firewall = 0
-
-# UFW
-if firewall == 'ufw':
-	ufw.ufw()
-# elif firewall == 'firewalld':
-# do something
-
-# No detected firewall
-elif firewall == 0: # Not running/not recognised
-	print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
+# Detect init system (detection of running firewall is init-dependent)
+fw_detect.init_system()
+# Detect firewall
+fw_detect.firewall_detect()
+fw_detect.firewall_diagnose()
 
 # Check for apache2
 apache2.apache2()
