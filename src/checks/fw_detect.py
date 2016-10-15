@@ -28,7 +28,7 @@ def firewall_detect():
 			stdout=subprocess.PIPE).communicate()[0] == b'active\n':
 			firewall = 'ufw'
 
-		if subprocess.Popen(['systemctl', 'is-active', 'firewalld'], \
+		elif subprocess.Popen(['systemctl', 'is-active', 'firewalld'], \
 			stdout=subprocess.PIPE).communicate()[0] == b'active\n':
 			firewall = 'firewalld'
 
@@ -39,9 +39,11 @@ def firewall_detect():
 		if subprocess.Popen(['service', 'ufw', 'status'], \
 			stdout=subprocess.PIPE).communicate()[0] == b'Firewall is running...done.\n':
 			firewall = 'ufw'
+
 		elif subprocess.Popen(['service', 'firewalld', 'status'], \
 			stdout=subprocess.PIPE).communicate()[0] == b'firewalld is running.\n':
 			firewall = 'firewalld'
+			
 		else:
 			firewall = 0
 
