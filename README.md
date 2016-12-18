@@ -8,8 +8,8 @@ desktop Linux security errors:
  - Ever run Apache to test something and then forget to turn it off?
  - Ever test openssh-server and then accidentally leave it running?
 
-Then Dragon Catcher is the tool for you! It's designed to test for common Linux
-security errors, like the ones above. If it finds any errors, then it returns a
+Dragon Catcher is the tool for you! It's designed to test for common Linux
+security errors, like the ones above. If it finds any, it returns a
 [WARN] or [Advice], depending on the severity.
 
 Currently, the following tests are included:
@@ -33,6 +33,10 @@ Installation
 ============
 Currently there is no (supported) way to install Dragon Catcher. You will need
 to run it as a script with admin privileges:  
+```
+git clone https://www.github.com/Fred-Barclay/Dragon-Catcher.git
+cd Dragon Catcher/src
+```
 `sudo python3 dragon-catcher.py`  
 or  
 `gksudo python3 dragon-catcher.py`  

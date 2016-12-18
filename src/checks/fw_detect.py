@@ -12,7 +12,8 @@ def init_system():
 	global init
 	# Is systemd running?
 	d = subprocess.Popen(['pidof', 'systemd'], stdout=subprocess.PIPE).communicate()[0]
-	if not d == b'':
+	d = d.decode('utf-8')
+	if not d == '':
 		# systemd is running
 		init = 'systemd'
 	else:
@@ -25,11 +26,11 @@ def firewall_detect():
 
 	if init == 'systemd':
 		if subprocess.Popen(['systemctl', 'is-active', 'ufw'], \
-			stdout=subprocess.PIPE).communicate()[0] == b'active\n':
+				stdout=subprocess.PIPE).communicate()[0] == b'active\n':
 			firewall = 'ufw'
 
-		if subprocess.Popen(['systemctl', 'is-active', 'firewalld'], \
-			stdout=subprocess.PIPE).communicate()[0] == b'active\n':
+		elif subprocess.Popen(['systemctl', 'is-active', 'firewalld'], \
+				stdout=subprocess.PIPE).communicate()[0] == b'active\n':
 			firewall = 'firewalld'
 
 		else:
@@ -37,20 +38,24 @@ def firewall_detect():
 
 	elif init == 'other':
 		if subprocess.Popen(['service', 'ufw', 'status'], \
-			stdout=subprocess.PIPE).communicate()[0] == b'Firewall is running...done.\n':
+				stdout=subprocess.PIPE).communicate()[0] == b'Firewall is running...done.\n':
 			firewall = 'ufw'
+
 		elif subprocess.Popen(['service', 'firewalld', 'status'], \
-			stdout=subprocess.PIPE).communicate()[0] == b'firewalld is running.\n':
+				stdout=subprocess.PIPE).communicate()[0] == b'firewalld is running.\n':
 			firewall = 'firewalld'
+
 		else:
 			firewall = 0
 
 def firewall_diagnose():
 	'''Test the firewall settings.'''
 	if firewall == 'ufw':
+		print('Your active firewall is `ufw`.')
 		ufw.ufw()
 
 	elif firewall == 'firewalld':
+		print('Your active firewall is `firewalld`.')
 		firewalld.firewalld()
 
 	elif firewall == 0: # Not running/not recognised

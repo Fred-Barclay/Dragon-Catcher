@@ -70,3 +70,6 @@ rootlog.rootlog()
 
 # Check for running sshd
 sshd.sshd()
+
+# Check for files in the user's /home that are not owned by the user
+# not_owned.notowned()
