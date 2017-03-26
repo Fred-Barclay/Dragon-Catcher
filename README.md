@@ -35,11 +35,9 @@ Currently there is no (supported) way to install Dragon Catcher. You will need
 to run it as a script with admin privileges:  
 ```
 git clone https://www.github.com/Fred-Barclay/Dragon-Catcher.git
-cd Dragon Catcher/src
+cd Dragon Catcher
+./run.sh
 ```
-`sudo python3 dragon-catcher.py`  
-or  
-`gksudo python3 dragon-catcher.py`  
 
 In the future I plan on adding an installation option for at least Debian (and
 related distros such as Linux Mint) and probably Fedora as well.
