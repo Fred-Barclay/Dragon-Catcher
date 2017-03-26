@@ -28,6 +28,8 @@ Currently, the following tests are included:
 
  - Is apache2 running?
 
+ - Are there files in the user's home that are owned by someone other than that user? 
+
 
 Installation
 ============
