@@ -2,6 +2,8 @@
 
  - Add installation option
 
+ - try and use split() in firewalld.py
+
 COMPLETED:
  - Split tests into individual modules rather than a single big file
 

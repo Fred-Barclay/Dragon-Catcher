@@ -1,5 +1,5 @@
 # ufw.py
-# Copyright (C) 2016 Dragon Catcher authors
+# Copyright (C) 2016--2017 Dragon Catcher authors
 # This file is distributed under the same license as the Dragon Catcher package.
 
 import subprocess
@@ -10,7 +10,7 @@ def ufw():
 	p1 = subprocess.Popen(['ufw', 'status', 'verbose'], stdout=subprocess.PIPE).communicate()[0]
 	p1 = p1.decode('utf-8')
 	ufw_status = p1.split()
-	
+
 	# ufw is not active
 	if not ufw_status[1] == 'active':
 		print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')

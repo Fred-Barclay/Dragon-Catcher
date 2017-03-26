@@ -1,5 +1,5 @@
 # httpd.py
-# Copyright (C) 2016 Dragon Catcher authors
+# Copyright (C) 2016-2017 Dragon Catcher authors
 # This file is distributed under the same license as the Dragon Catcher package.
 
 import subprocess

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Dragon Catcher - Catch common security mistakes for desktop Linux
-# Copyright (C) 2016 Dragon Catcher authors.
+# Copyright (C) 2016-2017 Dragon Catcher authors.
 # Dual-licensed under the GPLv2 (or, at your option, any later version) and
 # custom licensing terms:
 # GPL v2:
@@ -46,7 +46,7 @@
 import subprocess
 import os
 import sys
-from checks import apache2, fw_detect, httpd, rootlog, sshd
+from checks import apache2, fw_detect, httpd, not_owned, rootlog, sshd
 
 # Make sure we are running as root
 if os.geteuid() != 0:
@@ -72,4 +72,4 @@ rootlog.rootlog()
 sshd.sshd()
 
 # Check for files in the user's /home that are not owned by the user
-# not_owned.notowned()
+not_owned.not_owned()
