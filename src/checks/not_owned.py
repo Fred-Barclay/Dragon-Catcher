@@ -19,9 +19,11 @@ def not_owned():
 	if len(out) == 0:
 		print('There are no files in your home directory that are owned by another user.')
 	elif len(out) != 0:
-		print('The following files in your home directory are owned by another user.\x1b[6;36;43m [Advice] \x1b[0m')
+		print('The following files in your home directory are owned by another user.  \x1b[6;36;43m [Advice] \x1b[0m')
 		for file in out:
 			print(file)
 		print('You may want to investigate why you do not own these files.\n')
 	else:
 		print('not_owned.py has failed to run properly. Please contact the author with all relevant information.')
+
+	return(out)

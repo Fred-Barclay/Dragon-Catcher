@@ -54,22 +54,22 @@ if os.geteuid() != 0:
 	sys.exit(0)
 
 # Detect init system (detection of running firewall is init-dependent)
-fw_detect.init_system()
+init = fw_detect.init_system()
 # Detect firewall
-fw_detect.firewall_detect()
-fw_detect.firewall_diagnose()
+firewall_type = fw_detect.firewall_detect()
+firewall_status = fw_detect.firewall_diagnose()
 
-# Check for apache2
-apache2.apache2()
+# Check for running apache2
+apache2_run = apache2.apache2()
 
-# Check for httpd
-httpd.httpd()
+# Check for running httpd
+httpd_run = httpd.httpd()
 
 # Check for recent root login attempts
-rootlog.rootlog()
+root_login = rootlog.rootlog()
 
 # Check for running sshd
-sshd.sshd()
+sshd_run = sshd.sshd()
 
 # Check for files in the user's /home that are not owned by the user
-not_owned.not_owned()
+own = not_owned.not_owned()

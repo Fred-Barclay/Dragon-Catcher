@@ -11,14 +11,16 @@ def init_system():
 	'''Figure out the running init system.'''
 	global init
 	# Is systemd running?
-	d = subprocess.Popen(['pidof', 'systemd'], stdout=subprocess.PIPE).communicate()[0]
-	d = d.decode('utf-8')
-	if not d == '':
+	out1 = subprocess.Popen(['pidof', 'systemd'], stdout=subprocess.PIPE).communicate()[0]
+	out1 = out1.decode('utf-8')
+	if not out1 == '':
 		# systemd is running
 		init = 'systemd'
 	else:
 		# Upstart, sysvinit, etc
 		init = 'other'
+	return(out1)
+
 
 def firewall_detect():
 	'''Detect if the firewall is ufw, firewalld, or unknown/not running.'''

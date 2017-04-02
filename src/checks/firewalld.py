@@ -6,13 +6,15 @@ import subprocess
 
 def firewalld():
 	'''Tests for firewalld'''
-	p1 = subprocess.Popen(['firewall-cmd', '--state'], stdout=subprocess.PIPE \
+	out = subprocess.Popen(['firewall-cmd', '--state'], stdout=subprocess.PIPE \
 		).communicate()[0]
-	p1 = p1.decode('utf-8')
+	out = p1.decode('utf-8')
 
 	# Firewalld is not running
-	if not p1 == 'running\n':
+	if not out == 'running\n':
 		print('Your firewall is not active. \x1b[0;30;41m [WARN] \x1b[0m')
-		print(p1)
+		print(out)
 	else:
 		print('Your firewall is active.')
+
+	return(out)

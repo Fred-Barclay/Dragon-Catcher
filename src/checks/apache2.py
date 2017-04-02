@@ -14,3 +14,5 @@ def apache2():
 		print(out)
 	else:
 		print('There are not detected instances of apache2.')
+
+	return(out)
