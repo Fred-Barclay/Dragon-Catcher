@@ -53,8 +53,11 @@ if os.geteuid() != 0:
 	print('This script requires elevated priviledges!\nExiting.')
 	sys.exit(0)
 
+log = open('../output.txt', 'w')
+
 # Detect init system (detection of running firewall is init-dependent)
 init = fw_detect.init_system()
+log.write(init[0])
 # Detect firewall
 firewall_type = fw_detect.firewall_detect()
 firewall_status = fw_detect.firewall_diagnose()
@@ -73,3 +76,6 @@ sshd_run = sshd.sshd()
 
 # Check for files in the user's /home that are not owned by the user
 own = not_owned.not_owned()
+
+# Write output to logfile
+data = 'init, firewall_type, firewall_status'

@@ -12,3 +12,5 @@ def rootlog():
 	if root_attempts[0] == 'root':
 		print('Someone has tried (and failed) to log in as root. \x1b[6;36;43m [Advice] \x1b[0m')
 		print(root_attempts)
+	else:
+		print('There are no recent detected failed attempts to log in as root.')

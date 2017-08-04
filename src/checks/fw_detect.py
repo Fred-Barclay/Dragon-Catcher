@@ -13,13 +13,14 @@ def init_system():
 	# Is systemd running?
 	out1 = subprocess.Popen(['pidof', 'systemd'], stdout=subprocess.PIPE).communicate()[0]
 	out1 = out1.decode('utf-8')
-	if not out1 == '':
+	if  out1 != '':
 		# systemd is running
 		init = 'systemd'
 	else:
 		# Upstart, sysvinit, etc
 		init = 'other'
-	return(out1)
+	# return(out1)
+	return(out1, init)
 
 
 def firewall_detect():
